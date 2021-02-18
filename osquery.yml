@@ -1,0 +1,15 @@
+---
+  - hosts: localhost
+    connection: local
+    gather_facts: false
+    vars:
+      match_host: all
+    tasks:
+      - name: Run OSQuery Query
+        shell: osqueryi --json 'SELECT * FROM routes;'
+        register: response
+      - name: Show Response
+        debug:
+          msg: "{{ item.destination }}"
+        loop: "{{ response.stdout }}"
+...
